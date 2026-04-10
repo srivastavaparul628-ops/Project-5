@@ -1,0 +1,5 @@
+SELECT [user_id]
+      ,[engagement_score]
+      ,[experience_score]
+      ,[satisfaction_score]
+  FROM [master].[dbo].[telecom_dataset]
