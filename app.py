@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -14,10 +13,23 @@ df = load_data()
 
 st.title("📊 Telecom User Analytics Dashboard")
 
-st.subheader("Top 10 Satisfied Users")
-st.write(df.nlargest(10, 'satisfaction_score'))
+# KPIs
+col1, col2, col3 = st.columns(3)
+col1.metric("Total Users", len(df))
+col2.metric("Avg Engagement", round(df['engagement_score'].mean(),2))
+col3.metric("Avg Satisfaction", round(df['satisfaction_score'].mean(),2))
 
+# Scatter plot
 st.subheader("Engagement vs Experience")
 fig, ax = plt.subplots()
-sns.scatterplot(x=df['engagement_score'], y=df['experience_score'], hue=df['satisfaction_cluster'], ax=ax)
+sns.scatterplot(
+    x=df['engagement_score'],
+    y=df['experience_score'],
+    hue=df['satisfaction_score'],
+    ax=ax
+)
 st.pyplot(fig)
+
+# Top users
+st.subheader("Top 10 Users")
+st.dataframe(df.nlargest(10, 'satisfaction_score'))
